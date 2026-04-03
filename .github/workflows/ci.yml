@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript type check
+        run: npm run typecheck
+
+  lint-dist:
+    name: Validate dist/code.js (ES5 compatibility)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check for ES6+ syntax in dist/code.js
+        run: |
+          echo "Checking for forbidden modern JS syntax..."
+
+          # Arrow functions
+          if grep -P "=>" dist/code.js | grep -v "// " | grep -v "#"; then
+            echo "❌ Found arrow functions in dist/code.js"
+            exit 1
+          fi
+
+          # const / let
+          if grep -P "\b(const|let)\s" dist/code.js | grep -v "// "; then
+            echo "❌ Found const/let in dist/code.js"
+            exit 1
+          fi
+
+          # async/await
+          if grep -P "\b(async|await)\b" dist/code.js | grep -v "// "; then
+            echo "❌ Found async/await in dist/code.js"
+            exit 1
+          fi
+
+          # Optional chaining
+          if grep -P "\?\." dist/code.js | grep -v "// "; then
+            echo "❌ Found optional chaining (?.) in dist/code.js"
+            exit 1
+          fi
+
+          # Nullish coalescing
+          if grep -P "\?\?" dist/code.js | grep -v "// "; then
+            echo "❌ Found nullish coalescing (??) in dist/code.js"
+            exit 1
+          fi
+
+          echo "✅ dist/code.js is ES5-compatible"

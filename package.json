@@ -1,0 +1,39 @@
+{
+  "name": "shift-left-a11y",
+  "version": "1.0.0",
+  "description": "Free, open-source Figma plugin that catches WCAG 2.2 accessibility issues during the design phase — before code is written.",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/shift-left-a11y.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/shift-left-a11y/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/shift-left-a11y#readme",
+  "keywords": [
+    "figma",
+    "figma-plugin",
+    "accessibility",
+    "a11y",
+    "wcag",
+    "wcag-2.2",
+    "design",
+    "design-tools",
+    "inclusive-design",
+    "contrast-checker",
+    "annotation"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.90.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

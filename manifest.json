@@ -1,0 +1,11 @@
+{
+  "name": "Shift-Left A11y Scanner",
+  "id": "shift-left-a11y-scanner",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "src/ui/ui.html",
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}
